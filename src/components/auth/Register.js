@@ -21,9 +21,9 @@ export const Register = (props) => {
             .then(res => res.json())
             .then(createdUser => {
                 if (createdUser.hasOwnProperty("id")) {
-                    localStorage.setItem("honey_user", JSON.stringify({
+                    localStorage.setItem("tuned_user", JSON.stringify({
                         id: createdUser.id,
-                        staff: createdUser.isStaff
+                        
                     }))
 
                     navigate("/")
