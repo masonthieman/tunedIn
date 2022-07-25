@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom"
 import { Authorized } from "./views/Authorized.js"
 import { ApplicationViews } from "./views/ApplicationViews.js"
-
+import "./TunedIn.css"
 import { Login } from "./auth/Login.js"
 import { Register } from "./auth/Register.js"
 
