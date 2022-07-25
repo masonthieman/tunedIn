@@ -1,0 +1,73 @@
+{
+    "users": [
+        
+        {
+            "id": 1,
+            "email": "john@a.com",
+            "name": "John"
+        },
+        {
+            "id": 2,
+            "email": "bill@b.com",
+            "name": "Bill"
+        },
+        {
+            "id": 3,
+            "email": "a@a.com",
+            "name": "Alex"
+        },
+        {
+            "id": 4,
+            "email": "b@b.com",
+            "name": "Bubba"
+        }
+    ],
+
+    "concert": [
+        {
+            "id": 1,
+            "title": "",
+            "userId": 2,
+            "venue": "Bridgestone Arena",
+            "address": "501 Broadway",
+            "description": "",
+            "city": "Nashville",
+            "state": "Tennessee",
+            "startDate": "08-10-2022",
+            "startTime": "8:00pm",
+            "ticketsURL": "<ticketUrL>"
+        }
+    ],
+
+    "artists": [
+        {
+            "id": 1,
+            "name": "Wiz Khalifa"
+        },
+        {
+            "id": 2,
+            "name": "Logic"
+        }
+    ],
+
+    "artistconcerts": [
+        {
+            "id": 1,
+            "concertId": 1,
+            "artistId": 1
+        },
+        {
+            "id": 2,
+            "concertId": 1,
+            "artistId": 2
+        }
+    ],
+
+    "going": [
+        {
+            "id": 1,
+            "concertId": 1,
+            "userId": 1
+        }
+    ]
+}
