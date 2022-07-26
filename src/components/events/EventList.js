@@ -21,8 +21,10 @@ export const EventList = () => {
 
     // Function that returns all the artist names for a concert
     const getArtistNames = (concert) => {
-
-        const artistNames = eventArtists.map(eventArtist => {
+        const filteredArtists = eventArtists.filter(eventArtist => {
+            return eventArtist.eventId === concert.id
+        })
+        const artistNames = filteredArtists.map(eventArtist => {
             return  eventArtist.artist.name
             })
         return artistNames.join(", ")
