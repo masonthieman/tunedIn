@@ -10,6 +10,7 @@ export const EventList = () => {
     const localTunedUser = localStorage.getItem("tuned_user")
     const tunedUserObj = JSON.parse(localTunedUser)
 
+    // Function that retrieves all the concert events
     const getAllEvents = () => {
         fetch(`http://localhost:8088/events`)
         .then( response => response.json())
@@ -18,6 +19,7 @@ export const EventList = () => {
         })
     }
 
+    // Function that returns all the artist names for a concert
     const getArtistNames = (concert) => {
 
         const artistNames = eventArtists.map(eventArtist => {
@@ -28,6 +30,7 @@ export const EventList = () => {
     }
     
 
+    // Gets all the concert events along with the artists upon initial state
     useEffect(
         () => {
             getAllEvents()
@@ -51,14 +54,15 @@ export const EventList = () => {
                 events.map(
                     (event) => {
                         return <section className="event" key={`event--${event.id}`}>
-                            <header>
+                            <header>{event.startDate}</header>
+                            <section>
                                 {
                                     event.title
                                     ? `${event.title}: ${getArtistNames(event)}`
                                     : `${getArtistNames(event)}`
                                 }
-                            </header>
-
+                            </section>
+                            <footer>{event.venue} - {event.city}, {event.state}</footer>
 
                     </section>
                     }
