@@ -95,7 +95,7 @@ export const EventForm = () => {
         </fieldset>
         <fieldset>
         <div className="form-group">
-                <label htmlFor="artist">Venue:</label>
+                <label htmlFor="venue">Venue:</label>
                 <textarea
                     required autoFocus
                     type="text"
@@ -147,6 +147,26 @@ export const EventForm = () => {
                             update(copy)
                         }
                     }>{event.city}</textarea>
+            </div>
+        </fieldset>
+        <fieldset>
+            <div className="form-group">
+                <label htmlFor="description">Description:</label>
+                <textarea
+                    required autoFocus
+                    type="text"
+                    style={{
+                        height: "5rem"
+                    }}
+                    className="form-control"
+                    value={event.description}
+                    onChange={
+                        (changeEvt) => {
+                            const copy = { ...event }
+                            copy.description = changeEvt.target.value
+                            update(copy)
+                        }
+                    }>{event.description}</textarea>
             </div>
         </fieldset>
         <button
