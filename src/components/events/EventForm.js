@@ -45,13 +45,14 @@ export const EventForm = () => {
             body: JSON.stringify(createdEvent)
         })
             .then(response => response.json())
-            .then( () => {
+            .then( (newEvent) => {
+                createdArtist.eventId = newEvent.id
                return fetch(`http://localhost:8088/artists`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(artist)
+                body: JSON.stringify(createdArtist)
                })
                .then(response => response.json())
                

@@ -20,7 +20,7 @@ export const CreatedEvents = () => {
             return eventArtist.eventId === concert.id
         })
         const artistNames = filteredArtists.map(eventArtist => {
-            return  eventArtist.artist.name
+            return  eventArtist.name
             })
         return artistNames.join(", ")
        
@@ -31,10 +31,10 @@ export const CreatedEvents = () => {
         () => {
             getAllEvents()
 
-            fetch(`http://localhost:8088/artistevents?_expand=artist`)
+            fetch(`http://localhost:8088/artists`)
             .then(response => response.json())
-            .then(artistEventArray => {
-                setAllArtists(artistEventArray)
+            .then(artistArray => {
+                setAllArtists(artistArray)
             })
         },
         []
