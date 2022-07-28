@@ -26,6 +26,17 @@ export const CreatedEvents = () => {
        
     }
 
+    const deleteButton = (deleteId) => {
+        return <button onClick= {() => {
+            fetch(`http://localhost:8088/events/${deleteId}`, {
+                method: "DELETE"
+            })
+            .then( () => {
+                getAllEvents()
+            })
+        }} className="event__delete">Delete</button>
+    }
+
      // Gets all the concert events along with the artists upon initial state
     useEffect(
         () => {
@@ -67,7 +78,8 @@ export const CreatedEvents = () => {
                                     : `${getArtistNames(event)}`
                                 }
                             </section>
-                            <footer>{event.venue} - {event.city}, {event.state}</footer>
+                            <div>{event.venue} - {event.city}, {event.state}</div>
+                            <footer>{ deleteButton(event.id) }</footer>
 
                     </section>
                     }
