@@ -6,7 +6,10 @@ export const EventForm = () => {
         venue: "",
         address: "",
         description: "",
-        city: ""
+        city: "",
+        state: "Tennessee",
+        startDate: null,
+        startTime: null
     })
     const [artist, setArtist] = useState({
         name: ""
@@ -21,7 +24,14 @@ export const EventForm = () => {
 
         const createdEvent = {
             userId: tunedUserObj.id,
-
+            venue: event.venue,
+            address: event.address,
+            description: event.description,
+            title: event.title,
+            city: event.city,
+            startDate: event.startDate,
+            startTime: event.startTime,
+            ticketsURL: event.ticketsURL
         }
         const createdArtist = {
             name: artist.name
@@ -41,7 +51,7 @@ export const EventForm = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify()
+                body: JSON.stringify(artist)
                })
                .then(response => response.json())
                
@@ -151,6 +161,40 @@ export const EventForm = () => {
         </fieldset>
         <fieldset>
             <div className="form-group">
+                <label htmlFor="Time">Start Time:</label>
+                <input
+                    required autoFocus
+                    type="time"
+                    
+                    className="form-control"
+                    value={event.startTime}
+                    onChange={
+                        (changeEvt) => {
+                            const copy = { ...event }
+                            copy.startTime = changeEvt.target.value
+                            update(copy)
+                        }
+                    }/>
+            </div>
+            <div className="form-group">
+                <label htmlFor="Date">Start Date:</label>
+                <input
+                    required autoFocus
+                    type="date"
+                    
+                    className="form-control"
+                    value={event.startDate}
+                    onChange={
+                        (changeEvt) => {
+                            const copy = { ...event }
+                            copy.startDate = changeEvt.target.value
+                            update(copy)
+                        }
+                    }/>
+            </div>
+        </fieldset>
+        <fieldset>
+            <div className="form-group">
                 <label htmlFor="description">Description:</label>
                 <textarea
                     required autoFocus
@@ -167,6 +211,26 @@ export const EventForm = () => {
                             update(copy)
                         }
                     }>{event.description}</textarea>
+            </div>
+        </fieldset>
+        <fieldset>
+            <div className="form-group">
+                <label htmlFor="ticketsURL">Tickets URL:</label>
+                <textarea
+                    required autoFocus
+                    type="text"
+                    style={{
+                        height: "1.5rem"
+                    }}
+                    className="form-control"
+                    value={event.ticketsURL}
+                    onChange={
+                        (changeEvt) => {
+                            const copy = { ...event }
+                            copy.ticketsURL = changeEvt.target.value
+                            update(copy)
+                        }
+                    }>{event.ticketsURL}</textarea>
             </div>
         </fieldset>
         <button
