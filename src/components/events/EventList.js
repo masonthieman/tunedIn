@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import "./Events.css"
 export const EventList = () => {
     const [events, setEvents] = useState([])
-    const [eventArtists, setEventArtists] = useState([])
+    const [artists, setArtists] = useState([])
     const navigate = useNavigate()
     
 
@@ -21,9 +21,11 @@ export const EventList = () => {
 
     // Function that returns all the artist names for a concert
     const getArtistNames = (concert) => {
-
-        const artistNames = eventArtists.map(eventArtist => {
-            return  eventArtist.artist.name
+        const filteredArtists = artists.filter(artist => {
+            return artist.eventId === concert.id
+        })
+        const artistNames = filteredArtists.map(eventArtist => {
+            return  eventArtist.name
             })
         return artistNames.join(", ")
        
@@ -35,10 +37,10 @@ export const EventList = () => {
         () => {
             getAllEvents()
 
-            fetch(`http://localhost:8088/artistevents?_expand=artist`)
+            fetch(`http://localhost:8088/artists`)
             .then(response => response.json())
-            .then(artistEventArray => {
-                setEventArtists(artistEventArray)
+            .then(artistArray => {
+                setArtists(artistArray)
             })
         },
         []
