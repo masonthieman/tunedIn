@@ -272,7 +272,7 @@ const Dropdown = ({label, options, onChange})  => {
         {label}
         <select onChange={(event) => {onChange(event)}}>
             {options.map( (option) => {
-               return <option value={option.id}>{option.abbreviation}</option>
+               return <option key={`state--${option.id}`} value={option.id}>{option.abbreviation}</option>
 
             })}
         </select>
