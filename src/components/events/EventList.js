@@ -4,6 +4,7 @@ import "./Events.css"
 export const EventList = () => {
     const [events, setEvents] = useState([])
     const [artists, setArtists] = useState([])
+    const [states, setStates] = useState([])
     const navigate = useNavigate()
     
 
@@ -19,6 +20,14 @@ export const EventList = () => {
         })
     }
 
+    const getAllStates = () => {
+        fetch(`http://localhost:8088/states`)
+        .then(response => response.json())
+        .then(stateArray => {
+            setStates(stateArray)
+        })
+    }
+
     // Function that returns all the artist names for a concert
     const getArtistNames = (concert) => {
         const filteredArtists = artists.filter(artist => {
@@ -31,11 +40,18 @@ export const EventList = () => {
        
     }
     
+    const getEventState = (concert) => {
+        const foundState = states.find(state => state.id === concert.stateId)
+
+        return foundState
+    }
 
     // Gets all the concert events along with the artists upon initial state
     useEffect(
         () => {
             getAllEvents()
+
+            getAllStates()
 
             fetch(`http://localhost:8088/artists`)
             .then(response => response.json())
@@ -64,14 +80,15 @@ export const EventList = () => {
                                     : `${getArtistNames(event)}`
                                 }
                             </section>
-                            <section>
+                            
+                            <section>{event.venue} - {event.city}, {getEventState(event)?.name}</section>
+                            <footer>
                                 <label htmlFor="going">Going?</label>
                                 <input
                                 type="checkbox"
                                 />
 
-                            </section>
-                            <footer>{event.venue} - {event.city}, {event.state}</footer>
+                            </footer>
 
                     </section>
                     }
