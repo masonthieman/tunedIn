@@ -4,6 +4,7 @@ import "./Events.css"
 export const EventList = () => {
     const [events, setEvents] = useState([])
     const [artists, setArtists] = useState([])
+    const [states, setStates] = useState([])
     const navigate = useNavigate()
     
 
@@ -12,10 +13,18 @@ export const EventList = () => {
 
     // Function that retrieves all the concert events
     const getAllEvents = () => {
-        fetch(`http://localhost:8088/events`)
+        fetch(`http://localhost:8088/events?_sort=startDate`)
         .then( response => response.json())
         .then( eventArray => {
             setEvents(eventArray)
+        })
+    }
+
+    const getAllStates = () => {
+        fetch(`http://localhost:8088/states`)
+        .then(response => response.json())
+        .then(stateArray => {
+            setStates(stateArray)
         })
     }
 
@@ -31,11 +40,18 @@ export const EventList = () => {
        
     }
     
+    const getEventState = (concert) => {
+        const foundState = states.find(state => state.id === concert.stateId)
+
+        return foundState
+    }
 
     // Gets all the concert events along with the artists upon initial state
     useEffect(
         () => {
             getAllEvents()
+
+            getAllStates()
 
             fetch(`http://localhost:8088/artists`)
             .then(response => response.json())
@@ -64,7 +80,15 @@ export const EventList = () => {
                                     : `${getArtistNames(event)}`
                                 }
                             </section>
-                            <footer>{event.venue} - {event.city}, {event.state}</footer>
+                            
+                            <section>{event.venue} - {event.city}, {getEventState(event)?.name}</section>
+                            <footer>
+                                <label htmlFor="going">Going?</label>
+                                <input
+                                type="checkbox"
+                                />
+
+                            </footer>
 
                     </section>
                     }

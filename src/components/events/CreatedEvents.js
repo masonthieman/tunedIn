@@ -3,15 +3,24 @@ import { useNavigate } from "react-router-dom"
 export const CreatedEvents = () => {
     const [createdEvents, setCreatedEvents] = useState([])
     const [allArtists, setAllArtists] = useState([])
+    const [states, setStates] = useState([])
     const localTunedUser = localStorage.getItem("tuned_user")
     const tunedUserObj = JSON.parse(localTunedUser)
     const navigate = useNavigate()
 
     const getAllEvents = () => {
-        fetch(`http://localhost:8088/events?userId=${tunedUserObj.id}`)
+        fetch(`http://localhost:8088/events?userId=${tunedUserObj.id}&_sort=startDate`)
         .then( response => response.json())
         .then( eventArray => {
             setCreatedEvents(eventArray)
+        })
+    }
+
+    const getAllStates = () => {
+        fetch(`http://localhost:8088/states`)
+        .then(response => response.json())
+        .then(stateArray => {
+            setStates(stateArray)
         })
     }
 
@@ -24,6 +33,12 @@ export const CreatedEvents = () => {
             })
         return artistNames.join(", ")
        
+    }
+
+    const getEventState = (concert) => {
+        const foundState = states.find(state => state.id === concert.stateId)
+
+        return foundState
     }
 
     const deleteButton = (deleteId) => {
@@ -41,6 +56,8 @@ export const CreatedEvents = () => {
     useEffect(
         () => {
             getAllEvents()
+
+            getAllStates()
 
             fetch(`http://localhost:8088/artists`)
             .then(response => response.json())
@@ -78,7 +95,7 @@ export const CreatedEvents = () => {
                                     : `${getArtistNames(event)}`
                                 }
                             </section>
-                            <div>{event.venue} - {event.city}, {event.state}</div>
+                            <section>{event.venue} - {event.city}, {getEventState(event)?.name}</section>
                             <footer>{ deleteButton(event.id) }</footer>
 
                     </section>
