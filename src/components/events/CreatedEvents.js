@@ -8,7 +8,7 @@ export const CreatedEvents = () => {
     const navigate = useNavigate()
 
     const getAllEvents = () => {
-        fetch(`http://localhost:8088/events?userId=${tunedUserObj.id}`)
+        fetch(`http://localhost:8088/events?userId=${tunedUserObj.id}&_sort=startDate`)
         .then( response => response.json())
         .then( eventArray => {
             setCreatedEvents(eventArray)

@@ -12,7 +12,7 @@ export const EventList = () => {
 
     // Function that retrieves all the concert events
     const getAllEvents = () => {
-        fetch(`http://localhost:8088/events`)
+        fetch(`http://localhost:8088/events?_sort=startDate`)
         .then( response => response.json())
         .then( eventArray => {
             setEvents(eventArray)
@@ -63,6 +63,13 @@ export const EventList = () => {
                                     ? `${event.title}: ${getArtistNames(event)}`
                                     : `${getArtistNames(event)}`
                                 }
+                            </section>
+                            <section>
+                                <label htmlFor="going">Going?</label>
+                                <input
+                                type="checkbox"
+                                />
+
                             </section>
                             <footer>{event.venue} - {event.city}, {event.state}</footer>
 

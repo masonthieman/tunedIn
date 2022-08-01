@@ -8,16 +8,27 @@ export const EventForm = () => {
         description: "",
         city: "",
         state: "Tennessee",
-        startDate: null,
-        startTime: null
+        startDate: undefined,
+        startTime: undefined
     })
     const [artist, setArtist] = useState({
         name: ""
     })
-
+    const [states, setStates] = useState([])
     const localTunedUser = localStorage.getItem("tuned_user")
     const tunedUserObj = JSON.parse(localTunedUser)
     const navigate = useNavigate()
+
+    useEffect(
+        () => {
+            fetch(`http://localhost:8088/states`)
+            .then(response => response.json())
+            .then((stateArray) => {
+                setStates(stateArray)
+            })
+        },
+        []
+    )
   
     const handleCreateButtonClick = (clickEvent) => {
         clickEvent.preventDefault()
@@ -159,6 +170,20 @@ export const EventForm = () => {
                         }
                     }>{event.city}</textarea>
             </div>
+            <div className="form-group">
+                    <Dropdown
+                    label="State: "
+                    options={states}
+                    value={event.stateId}
+                    onChange={
+                        (event)=> {
+                            const copy = {...event}
+                            copy.stateId = parseInt(event.target.value)
+                            update(copy)
+                        }
+                    } />
+                    
+                </div>
         </fieldset>
         <fieldset>
             <div className="form-group">
@@ -240,4 +265,18 @@ export const EventForm = () => {
             Create Event
             </button>
     </form>
+}
+const Dropdown = ({label, options, onChange})  => {
+    return (
+        <label>
+        {label}
+        <select onChange={(event) => {onChange(event)}}>
+            {options.map( (option) => {
+               return <option value={option.id}>{option.abbreviation}</option>
+
+            })}
+        </select>
+        </label>
+        
+    )
 }
