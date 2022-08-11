@@ -9,7 +9,9 @@ export const EventList = () => {
     const [showAttending, updateShowAttending] = useState([])
     const [attendingEvents, setAttendance] = useState([])
     const navigate = useNavigate()
-    
+  
+
+
 
     const localTunedUser = localStorage.getItem("tuned_user")
     const tunedUserObj = JSON.parse(localTunedUser)
@@ -24,6 +26,7 @@ export const EventList = () => {
         })
     }
 
+    // Function that retrieves all of the U.S. states
     const getAllStates = () => {
         fetch(`http://localhost:8088/states`)
         .then(response => response.json())
@@ -32,6 +35,7 @@ export const EventList = () => {
         })
     }
 
+    // Function that retrieves all of the attending events for the logged in user
     const getAllAttendance = () => {
         fetch(`http://localhost:8088/going?userId=${tunedUserObj.id}&_expand=event`)
         .then(response => response.json())
@@ -52,6 +56,7 @@ export const EventList = () => {
        
     }
     
+    // Function that retrieves the U.S. state name for an event
     const getEventState = (concert) => {
         const foundState = states.find(state => state.id === concert.stateId)
 
@@ -63,6 +68,7 @@ export const EventList = () => {
     // Gets all the concert events along with the artists upon initial state
     useEffect(
         () => {
+            
             getAllEvents()
 
             getAllStates()
@@ -78,9 +84,10 @@ export const EventList = () => {
         []
     )
 
+    // Tracks the state of the user when they toggle their schedule of attending events
     useEffect(
         () => {
-
+            
             if (showAttending) {
                 setSchedule(events)
             }
@@ -96,7 +103,7 @@ export const EventList = () => {
         [showAttending]
     )
 
-    
+    // Returns an add button that allows a user to select an event as "going"
     const addButton = (concert) => {
         return <button onClick={() => {
             fetch(`http://localhost:8088/going`, {
@@ -117,6 +124,7 @@ export const EventList = () => {
         >I'm Going</button>
     } 
 
+    // Returns a delete button that allows a user to remove an event from "going"
     const deleteButton = (goingId) => {
         return <button onClick={() => {
             fetch(`http://localhost:8088/going/${goingId}`, {
@@ -131,7 +139,8 @@ export const EventList = () => {
             }} className="event__delete">Remove</button>
         }
     
-
+    
+    // Function that conditionally renders an add or delete button depending on if the event is marked as "going"
     const addOrDeleteButton = (concert) => {
         const matchEvent = attendingEvents.find(attendingElement => attendingElement.eventId === concert.id
             && attendingElement.userId === tunedUserObj.id)

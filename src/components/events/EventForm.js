@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react"
+import React from "react"
 import { useNavigate } from "react-router-dom"
 export const EventForm = () => {
     const [event, update] = useState({
         title: "",
         venue: "",
         address: "",
-        description: "",
         city: "",
-        state: "Tennessee",
-        startDate: undefined,
-        startTime: undefined
+        description: "",
+        stateId: 42,
+        startDate: "",
+        startTime: ""
     })
+    
     const [artist, setArtist] = useState({
         name: ""
     })
@@ -40,6 +42,7 @@ export const EventForm = () => {
             description: event.description,
             title: event.title,
             city: event.city,
+            stateId: event.stateId,
             startDate: event.startDate,
             startTime: event.startTime,
             ticketsURL: event.ticketsURL
@@ -79,7 +82,7 @@ export const EventForm = () => {
             <div className="form-group">
                 <label htmlFor="title">Title:</label>
                 <textarea
-                    required autoFocus
+                    required
                     type="text"
                     style={{
                         height: "1.5rem"
@@ -95,11 +98,11 @@ export const EventForm = () => {
                     }>{event.title}</textarea>
             </div>
         </fieldset>
-        <fieldset>
+        
             <div className="form-group">
                 <label htmlFor="artist">Artist:</label>
                 <textarea
-                    required autoFocus
+                    required
                     type="text"
                     style={{
                         height: "1.5rem"
@@ -114,12 +117,12 @@ export const EventForm = () => {
                         }
                     }>{artist.name}</textarea>
             </div>
-        </fieldset>
+        
         <fieldset>
         <div className="form-group">
                 <label htmlFor="venue">Venue:</label>
                 <textarea
-                    required autoFocus
+                    required
                     type="text"
                     style={{
                         height: "1.5rem"
@@ -134,10 +137,12 @@ export const EventForm = () => {
                         }
                     }>{event.venue}</textarea>
             </div>
+        </fieldset>
+        <fieldset>
         <div className="form-group">
             <label htmlFor="address">Street Address:</label>
             <textarea
-                required autoFocus
+                required
                 type="text"
                 style={{
                     height: "1.5rem"
@@ -152,10 +157,12 @@ export const EventForm = () => {
                     }
                 }>{event.address}</textarea>
         </div>
+        </fieldset>
+        <fieldset>
         <div className="form-group">
                 <label htmlFor="city">City:</label>
                 <textarea
-                    required autoFocus
+                    required
                     type="text"
                     style={{
                         height: "1.5rem"
@@ -170,15 +177,17 @@ export const EventForm = () => {
                         }
                     }>{event.city}</textarea>
             </div>
+        </fieldset>
+        <fieldset>
             <div className="form-group">
                     <Dropdown
                     label="State: "
                     options={states}
                     value={event.stateId}
                     onChange={
-                        (event)=> {
+                        (changeEvt)=> {
                             const copy = {...event}
-                            copy.stateId = parseInt(event.target.value)
+                            copy.stateId = parseInt(changeEvt.target.value)
                             update(copy)
                         }
                     } />
@@ -189,7 +198,7 @@ export const EventForm = () => {
             <div className="form-group">
                 <label htmlFor="Time">Start Time:</label>
                 <input
-                    required autoFocus
+                    required
                     type="time"
                     
                     className="form-control"
@@ -202,10 +211,12 @@ export const EventForm = () => {
                         }
                     }/>
             </div>
+        </fieldset>
+        <fieldset>
             <div className="form-group">
                 <label htmlFor="Date">Start Date:</label>
                 <input
-                    required autoFocus
+                    required
                     type="date"
                     
                     className="form-control"
@@ -223,7 +234,7 @@ export const EventForm = () => {
             <div className="form-group">
                 <label htmlFor="description">Description:</label>
                 <textarea
-                    required autoFocus
+                    required
                     type="text"
                     style={{
                         height: "5rem"
@@ -243,7 +254,7 @@ export const EventForm = () => {
             <div className="form-group">
                 <label htmlFor="ticketsURL">Tickets URL:</label>
                 <textarea
-                    required autoFocus
+                    required
                     type="text"
                     style={{
                         height: "1.5rem"
