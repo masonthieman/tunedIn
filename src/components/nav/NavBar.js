@@ -9,9 +9,7 @@ export const NavBar= () => {
             <li className="navbar__item active">
                 <Link className="navbar__link" to="/events">Find Events</Link>
             </li>
-            <li className="navbar__item active">
-                <Link className="navbar__link" to="/events/upcoming">My Schedule</Link>
-            </li>
+            
             <li className="navbar__item active">
                 <Link className="navbar__link" to="/events/created">My Events</Link>
             </li>

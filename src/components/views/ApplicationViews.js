@@ -2,7 +2,7 @@ import { Outlet, Route , Routes } from "react-router-dom"
 import { NavBar } from "../nav/NavBar.js"
 import { EventList } from "../events/EventList.js"
 import { EventForm } from "../events/EventForm.js"
-import { UpcomingEvents } from "../events/UpcomingEvents.js"
+
 import { CreatedEvents } from "../events/CreatedEvents.js"
 export const ApplicationViews = () => {
     return (
@@ -15,7 +15,7 @@ export const ApplicationViews = () => {
                 </>
             }>
                 <Route path="events" element={ <EventList /> } />
-                <Route path="events/upcoming" element={ <UpcomingEvents /> } />
+                
                 <Route path="events/created" element={ <CreatedEvents /> } />
                 <Route path="events/create" element={ <EventForm /> } />
 
