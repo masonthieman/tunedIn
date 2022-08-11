@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { Button,List, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap"
 import "./Events.css"
 export const EventList = () => {
     const [events, setEvents] = useState([])
@@ -8,10 +9,11 @@ export const EventList = () => {
     const [schedule, setSchedule] = useState([])
     const [showAttending, updateShowAttending] = useState([])
     const [attendingEvents, setAttendance] = useState([])
-    const navigate = useNavigate()
-  
+    const [modalEvent,setModalEvent] = useState([])
+    const [modal, setModal] = useState(false)
+    const toggle = () =>  setModal(!modal)
 
-
+      
 
     const localTunedUser = localStorage.getItem("tuned_user")
     const tunedUserObj = JSON.parse(localTunedUser)
@@ -105,7 +107,9 @@ export const EventList = () => {
 
     // Returns an add button that allows a user to select an event as "going"
     const addButton = (concert) => {
-        return <button onClick={() => {
+        return <Button
+                color="primary"
+                onClick={() => {
             fetch(`http://localhost:8088/going`, {
                 method: "POST",
                 headers: {
@@ -121,12 +125,12 @@ export const EventList = () => {
                 getAllAttendance()
             })
         }}
-        >I'm Going</button>
+        >I'm Going</Button>
     } 
 
     // Returns a delete button that allows a user to remove an event from "going"
     const deleteButton = (goingId) => {
-        return <button onClick={() => {
+        return <Button color="primary" onClick={() => {
             fetch(`http://localhost:8088/going/${goingId}`, {
                 method: "DELETE"
             })
@@ -136,7 +140,7 @@ export const EventList = () => {
 
             })
 
-            }} className="event__delete">Remove</button>
+            }} className="event__delete">Remove</Button>
         }
     
     
@@ -150,17 +154,17 @@ export const EventList = () => {
         : addButton(concert) 
     }
 
-
+    
     return <>
     
         <h2>List of Local Concerts</h2>
 
-        <button onClick={ () => { 
+        <Button color="primary" onClick={ () => { 
             if (showAttending) { updateShowAttending(false)}
             
             else { updateShowAttending(true) }
 
-        }}>Toggle My Schedule</button>
+        }}>Toggle My Schedule</Button>
 
         <article className="events">
             {
@@ -182,13 +186,74 @@ export const EventList = () => {
                                 {
                                 addOrDeleteButton(event)
                                 }
+                                {' '}
+                                <Button color="primary" 
+                                onClick={ () => {
+                                    setModalEvent({...event})
+                                    toggle()  }}>
+                                    Show Details
+                                </Button>
                             </footer>
-                                
-                    </section>
+                            </section>
                     }
                 )
-            }
+                }
         </article>
+                            <Modal isOpen={modal} toggle={toggle}>
+                                <ModalHeader toggle={toggle}>
+                                    {
+                                        modalEvent.title
+                                        ? `${modalEvent.title}: ${getArtistNames(modalEvent)}`
+                                        : `${getArtistNames(modalEvent)}`
+                                    }
+                                    </ModalHeader>
+                                <ModalBody>
+                                    <List type="unstyled">
+                                        <li>
+                                            Artist(s): { getArtistNames(modalEvent)
+                                            ? `${getArtistNames(modalEvent)}`
+                                            : "N/A" }
+                                        </li>
+                                        <li>
+                                            Venue: { modalEvent.venue
+                                            ? `${modalEvent.venue}`
+                                            : "N/A" }
+                                        </li>
+                                        <li>
+                                           Street Address: { modalEvent.address
+                                            ? `${modalEvent.address}`
+                                            : "N/A" }
+                                        </li>
+                                        <li>
+                                        Location: {modalEvent.city}, {getEventState(modalEvent)?.name}
+                                        </li>
+                                        <li>
+                                           Time: {modalEvent.startTime
+                                            ? `${modalEvent.startTime}`
+                                            : "N/A" }
+                                        </li>
+                                        <li>
+                                            Date: {modalEvent.startDate}
+                                        </li>
+                                        <li>
+                                            Tickets: {modalEvent.ticketsURL}
+                                        </li>
+                                        <li>
+                                            {modalEvent.description 
+                                            ? `Description: ${modalEvent.description}`
+                                            : "" }
+                                        </li>
+                                        
+
+                                    </List>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="danger" onClick={toggle}>
+                                        Close
+                                    </Button>
+                                </ModalFooter>
+                            </Modal>
+                         
     
     
     
