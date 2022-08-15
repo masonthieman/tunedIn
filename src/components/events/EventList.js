@@ -13,7 +13,7 @@ export const EventList = () => {
     const [modal, setModal] = useState(false)
     const toggle = () =>  setModal(!modal)
 
-      
+    
 
     const localTunedUser = localStorage.getItem("tuned_user")
     const tunedUserObj = JSON.parse(localTunedUser)
@@ -71,7 +71,7 @@ export const EventList = () => {
     useEffect(
         () => {
             
-            getAllEvents()
+           getAllEvents()
 
             getAllStates()
 
@@ -258,4 +258,4 @@ export const EventList = () => {
     
     
     </>
-}
+} 
