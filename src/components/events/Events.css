@@ -4,8 +4,22 @@
 }
 
 .event {
-    background-color: rgb(243,230,255);
-    border: 1px dotted darkmagenta;
+    background-color: rgb(137, 10, 172);
+    border: 1px dotted whitesmoke;
     padding: 1.2rem;
     margin: 0.4rem 0;
+    color: white
+}
+
+.results__header {
+    text-align: center;
+    color: whitesmoke
+}
+
+.button__container {
+    padding: 1rem;
+}
+
+.eventForm {
+    color: whitesmoke
 }

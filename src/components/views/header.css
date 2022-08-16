@@ -1,0 +1,11 @@
+.tunedIn__header {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.image__container {
+    display: flex;
+    justify-content: center;
+}

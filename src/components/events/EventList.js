@@ -157,14 +157,16 @@ export const EventList = () => {
     
     return <>
     
-        <h2>List of Local Concerts</h2>
+        <h2 className="results__header">List of Local Concerts</h2>
 
+        <div className="button__container">
         <Button color="primary" onClick={ () => { 
             if (showAttending) { updateShowAttending(false)}
             
             else { updateShowAttending(true) }
 
         }}>Toggle My Schedule</Button>
+        </div>
 
         <article className="events">
             {
@@ -236,7 +238,7 @@ export const EventList = () => {
                                             Date: {modalEvent.startDate}
                                         </li>
                                         <li>
-                                            Tickets: {modalEvent.ticketsURL}
+                                            Tickets: <a href={modalEvent.ticketsURL}>{modalEvent.ticketsURL}</a>
                                         </li>
                                         <li>
                                             {modalEvent.description 

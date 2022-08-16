@@ -1,22 +1,35 @@
 import { Link, useNavigate } from "react-router-dom"
 import { Button } from 'reactstrap'
-import { Navbar, NavLink, Nav, NavItem } from 'reactstrap'
+import "./NavBar.css"
+import { Navbar, NavbarBrand,NavLink, Nav, NavItem } from 'reactstrap'
 export const UserNavBar= () => {
     const navigate = useNavigate()
 
     return (
-        <Navbar>
+        <Navbar className="navbar">
+            <NavbarBrand href="/">
+                        tunedIn
+                        <img
+                            alt="logo"
+                            src="../../images/tunedIn.jpeg"
+                            style={{
+                                height: 80,
+                                width: 120
+                            }}
+                        />
+                        
+                    </NavbarBrand>
             <Nav fill pills>
-                <NavItem>
+                <NavItem className="navbar__item">
                     <NavLink href="/events">Find Events</NavLink>
                 </NavItem>
-                <NavItem>
+                <NavItem className="navbar__item">
                     <NavLink href="/events/created">My Events</NavLink>
                 </NavItem>
                 
                 {
                 localStorage.getItem("tuned_user")
-                ? <NavItem>
+                ? <NavItem className="navbar__item">
                     <NavLink href="" onClick={() => {
                         localStorage.removeItem("tuned_user")
                         navigate("/", {replace: true})
@@ -27,31 +40,14 @@ export const UserNavBar= () => {
                 : ""
                 }
 
+                
+               
+
                     
                 
             </Nav>
-
-        </Navbar>
-        /*
-        <ul className="nav nav-pills nav-fill">
-            <li className="nav-item">
-                <Link className="navbar__link" to="/events">Find Events</Link>
-            </li>
             
-            <li className="nav-item">
-                <Link className="navbar__link" to="/events/created">My Events</Link>
-            </li>
-            {
-                localStorage.getItem("tuned_user")
-                    ? <li className="nav-item nav-logout">
-                        <Link className="navbar__link" to="" onClick={() => {
-                            localStorage.removeItem("tuned_user")
-                            navigate("/", {replace: true})
-                        }}>Logout</Link>
-                    </li>
-                    : ""
-            }
-        </ul>
-        */
+        </Navbar>
+        
     )
 }

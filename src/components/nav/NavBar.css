@@ -13,3 +13,10 @@
     margin-left: auto;
 }
 
+.tunedIn__logo {
+    align-self: center;
+}
+
+.nav-link {
+    color: #FFA500;
+}
